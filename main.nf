@@ -1,7 +1,9 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-//include { ALIGN_READS } from "./process.nf"
+ref_fa = file(params.ref)
+ref_fai = file(params.ref_fai)
+timestamp = file(params.timestamp)
 
 def getLibraryId( file ) {
         file.split(/\//)[-1].split(/_/)[0]
