@@ -61,7 +61,9 @@ workflow TARGETED_FAMILY{
 		known_snps_dbsnp
 		known_indels
 		target_bed
+		ch_versions
 	main:
+		ch_versions = Channel.empty()
 		ALIGN(reads, ref, ref_fai)
 		//PRE-PROCESSING(ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed)
 		//VARIANT_CALLING(ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed, params.proband)
@@ -71,5 +73,5 @@ workflow TARGETED_FAMILY{
 }
 
 workflow {
-	TARGETED_FAMILY()
+	TARGETED_FAMILY(reads, ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed, ch_versions)
 }
