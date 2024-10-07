@@ -10,13 +10,26 @@ known_indels_index=file(params.known_indels + '.tbi')
 target_bed=file(params.target_bed)
 target_bed_covered=file(params.target_bed_covered)
 timestamp = file(params.timestamp)
+pattern = file(params.pattern)
+join_number = file(params.join_number)
 
 include { MERGE_FASTQ } from './modules/merge_fastq'
 include { ALIGN_READS } from './modules/align'
 
 def getLibraryId( file ) {
-        file.split(/\//)[-1].split(/_/)[0]
+    def filename = file.split(/\//)[-1]  // Extract filename from the full path
+    def pattern = params.pattern  // Pattern to split the filename
+    def join_number = params.join_number.toString().split(',').collect { it as int }  // Convert join_number to a list of integers
+
+    // Split the filename by the given pattern
+    def parts = filename.split(pattern)
+
+    // Concatenate parts based on join_number indices
+    def libraryId = join_number.collect { parts[it] }.join('_') 
+
+    return libraryId
 }
+
 
 Channel
         .fromFilePairs( params.reads, flat: true )
