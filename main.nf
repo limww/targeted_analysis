@@ -29,11 +29,7 @@ def getLibraryId( file ) {
     return libraryId
 }
 
-/*workflow PRE-PROCESSING {
-	MARK_DUPLICATES(ALIGN_READS.out[0])
-        BASE_RECALIBRATOR_WES(MARK_DUPLICATES.out[0], ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed)
-        APPLY_BQSR_WES(MARK_DUPLICATES.out[0].join(BASE_RECALIBRATOR_WES.out[0]), ref_fa, ref_fai)
-}
+/*
 
 workflow VARIANT_CALLING {
 	HAPLOTYPECALLER_WES(APPLY_BQSR_WES.out[0], ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed)
