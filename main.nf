@@ -13,7 +13,7 @@ timestamp = file(params.timestamp)
 pattern = file(params.pattern)
 join_number = file(params.join_number)
 
-include { ALIGN } from './subworkflow/align_bwa'
+include { ALIGN } from '../subworkflow/align_bwa'
 
 def getLibraryId( file ) {
     def filename = file.split(/\//)[-1]  // Extract filename from the full path
