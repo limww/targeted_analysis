@@ -4,7 +4,7 @@ include { ALIGN_READS } from '../../modules/align'
 workflow ALIGN {
 	take:
 		reads
-		ref
+		ref_fa
 		ref_fai
 	main:
 		ch_versions = Channel.empty()
