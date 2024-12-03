@@ -13,7 +13,9 @@ workflow BWA_ALIGN {
 		ch_versions = Channel.empty()
 		MERGE_FASTQ(reads)
 		ALIGN_READS(MERGE_FASTQ.out, ref_fa, ref_fai)
+		ch_versions = ch_versions.mix(ALIGN_READS.out.versions)
 	emit: 
 		aligned_bam = ALIGN_READS.out[0]
-		ch_versions = ch_versions.mix(ALIGN_READS.out.versions)
+		versions = ch_versions
+		
 }
