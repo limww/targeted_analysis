@@ -7,7 +7,7 @@ include { GATK_PRACTICES }  from '../../subworkflow/gatk_practices'
 workflow TARGETED_FAMILY{
 	take: 
 		reads
-		ref
+		ref_fa
 		ref_fai
 		known_snps_dbsnp_index
 		known_indels_index
@@ -17,7 +17,7 @@ workflow TARGETED_FAMILY{
 		ch_versions
 	main:
 		ch_versions = Channel.empty()
-		BWA_ALIGN(reads, ref, ref_fai)
+		BWA_ALIGN(reads, ref_fa, ref_fai)
 		ch_versions = ch_versions.mix(BWA_ALIGN.out.versions)
 		
 		ch_aligned_bam = BWA_ALIGN.out.aligned_bam
