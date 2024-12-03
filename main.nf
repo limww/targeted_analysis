@@ -61,6 +61,7 @@ workflow TARGETED_ANALYSIS {
 		known_snps_dbsnp,
 		known_indels,
 		target_bed,
+
 		ch_versions
     	)
     	ch_versions = ch_versions.mix(TARGETED_FAMILY.out.versions)
