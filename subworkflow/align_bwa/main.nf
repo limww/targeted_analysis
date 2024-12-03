@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 include { MERGE_FASTQ } from '../../modules/merge_fastq'
 include { ALIGN_READS } from '../../modules/align'
 
-workflow ALIGN {
+workflow BWA_ALIGN {
 	take:
 		reads
 		ref_fa
