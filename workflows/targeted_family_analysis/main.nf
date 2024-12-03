@@ -27,7 +27,7 @@ workflow TARGETED_FAMILY{
 		//VARIANT_CALLING(ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed, params.proband)
 	emit:
 		BWA_ALIGN.out.aligned_bam
-		GATK_PRACTICES.bqsr_recal_table
-		GATK_PRACTICES.bqsr_bam
+		GATK_PRACTICES.out.bqsr_recal_table
+		GATK_PRACTICES.out.bqsr_bam
 		versions = ch_versions
 }
