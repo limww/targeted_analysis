@@ -5,7 +5,7 @@ include { MARK_DUPLICATES } from '../../modules/mark_duplicates'
 include { BASE_RECALIBRATOR_WES } from '../../modules/base_recalibrator'
 include { APPLY_BQSR_WES } from '../../modules/apply_bqsr'
 
-workflow PRE-PROCESSING {
+workflow PREPROCESSING {
   take:
     ch_aligned_bam
     ref
@@ -25,4 +25,7 @@ workflow PRE-PROCESSING {
      ch_versions = ch_versions.mix(APPLY_BQSR_WES.out.versions)
   emit:
     mark_dup_bam = MARK_DUPLICATES.out[0]
+    bqsr_recal_bam = BASE_RECALIBRATOR_WES.out[0]
+    apply_bqsr_bam = APPLY_BQSR_WES.out[0]
+    versions = ch_versions
 }
