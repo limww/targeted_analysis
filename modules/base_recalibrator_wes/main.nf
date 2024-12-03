@@ -17,7 +17,7 @@ process BASE_RECALIBRATOR_WES{
 
   script:
   """
-  gatk BaseRecalibrator -R $params.ref -I $sortedbam --known-sites $known_snps_dbsnp --known-sites $known_indels -L $target_bed -O ${sortedbam.simpleName}.${params.timestamp}.recal_data.table
+  gatk BaseRecalibrator -R ${ref_fa} -I $sortedbam --known-sites $known_snps_dbsnp --known-sites $known_indels -L $target_bed -O ${sortedbam.simpleName}.${params.timestamp}.recal_data.table
   
   cat <<-END_VERSIONS > versions.yml
   ${task.process}\tgatk:\$(echo \$(gatk --version 2>&1) | sed 's/^.*(GATK) v//; s/ .*\$//')
