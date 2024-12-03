@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 
 include { MARK_DUPLICATES } from '../../modules/mark_duplicates'
 include { BASE_RECALIBRATOR_WES } from '../../modules/base_recalibrator_wes'
-include { APPLY_BQSR_WES } from '../../modules/apply_bqsr'
+include { APPLY_BQSR_WES } from '../../modules/apply_bqsr_wes'
 
 workflow PREPROCESSING {
   take:
