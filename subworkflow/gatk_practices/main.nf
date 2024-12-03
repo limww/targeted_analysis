@@ -8,7 +8,7 @@ include { APPLY_BQSR_WES } from '../../modules/apply_bqsr_wes'
 workflow GATK_PRACTICES {
   take:
     ch_aligned_bam
-    ref
+    ref_fa
     ref_fai
     known_snps_dbsnp_index
     known_indels_index
