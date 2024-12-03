@@ -46,8 +46,9 @@ workflow TARGETED_ANALYSIS {
 
 	main: 
 	ch_versions = Channel.empty()
+	input_files = "${params.input}/${params.fastq_file_pattern}"
 	Channel
-	        .fromFilePairs( params.reads, flat: true )
+	        .fromFilePairs( input_files, flat: true )
 	        .map { prefix, file1, file2 -> tuple(getLibraryId(prefix), file1, file2) }
 	        .groupTuple()
 	        .set {reads}
