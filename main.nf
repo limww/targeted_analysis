@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-ref_fa = file(params.ref)
+ref_fa = file(params.ref_fa)
 ref_fai = file(params.ref_fai)
 known_snps_dbsnp=file(params.known_snps_dbsnp)
 known_snps_dbsnp_index=file(params.known_snps_dbsnp + '.tbi')
