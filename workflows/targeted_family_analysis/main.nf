@@ -10,6 +10,7 @@ workflow TARGETED_FAMILY{
 		known_snps_dbsnp
 		known_indels
 		target_bed
+		ch_versions
 	main:
 		ch_versions = Channel.empty()
 		ALIGN(reads, ref, ref_fai)
