@@ -11,7 +11,7 @@ process ALIGN_READS {
 
   script:
   """
-  bwa-mem2.avx2 mem -t 20 -M -R '@RG\\tID:${samplename}\\tSM:${samplename}\\tPL:ILLUMINA' $params.ref $forward $reverse | gatk SortSam -I /dev/stdin -O ${samplename}.${params.timestamp}.sorted.bam --SORT_ORDER coordinate --CREATE_INDEX true
+  bwa-mem2.avx2 mem -t 20 -M -R '@RG\\tID:${samplename}\\tSM:${samplename}\\tPL:ILLUMINA' ${ref_fa} $forward $reverse | gatk SortSam -I /dev/stdin -O ${samplename}.${params.timestamp}.sorted.bam --SORT_ORDER coordinate --CREATE_INDEX true
 
   cat <<-END_VERSIONS > versions.yml
   ${task.process}\tbwa-mem2.avx2:\$(echo \$(bwa-mem2.avx2 version 2>&1) ); gatk:\$(echo \$(gatk --version 2>&1) | sed 's/^.*(GATK) v//; s/ .*\$//')
