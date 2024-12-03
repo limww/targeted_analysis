@@ -62,7 +62,7 @@ workflow TARGETED_ANALYSIS {
 		target_bed,
 		ch_versions
     	)
-    	ch_versions = ch_versions.mix(TARGETED_ANALYSIS.out.versions)
+    	ch_versions = ch_versions.mix(TARGETED_FAMILY.out.versions)
 }
 
 workflow {
