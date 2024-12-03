@@ -13,7 +13,7 @@ timestamp = file(params.timestamp)
 pattern = file(params.pattern)
 join_number = file(params.join_number)
 
-include { ALIGN } from '../subworkflow/align_bwa'
+include { TARGETED_FAMILY } from './workflows/targeted_family_analysis'
 
 def getLibraryId( file ) {
     def filename = file.split(/\//)[-1]  // Extract filename from the full path
@@ -29,15 +29,6 @@ def getLibraryId( file ) {
     return libraryId
 }
 
-
-Channel
-        .fromFilePairs( params.reads, flat: true )
-        .map { prefix, file1, file2 -> tuple(getLibraryId(prefix), file1, file2) }
-        .groupTuple()
-        .set {reads}
-
-
-
 /*workflow PRE-PROCESSING {
 	MARK_DUPLICATES(ALIGN_READS.out[0])
         BASE_RECALIBRATOR_WES(MARK_DUPLICATES.out[0], ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed)
@@ -51,26 +42,30 @@ workflow VARIANT_CALLING {
         DECOMPOSE_AND_NORMALIZE(HARDFILTER_VARIANTS.out[0], ref_fa, ref_fai)
 }*/
 
-workflow TARGETED_FAMILY{
-	take: 
-		reads
-		ref
-		ref_fai
-		known_snps_dbsnp_index
-		known_indels_index
-		known_snps_dbsnp
-		known_indels
-		target_bed
-	main:
-		ch_versions = Channel.empty()
-		ALIGN(reads, ref, ref_fai)
-		//PRE-PROCESSING(ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed)
-		//VARIANT_CALLING(ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed, params.proband)
-	emit:
-		ALIGN.out.aligned_bam
-		ALIGN.out.ch_versions
+workflow TARGETED_ANALYSIS {
+
+	main: 
+	ch_versions = Channel.empty()
+	Channel
+	        .fromFilePairs( params.reads, flat: true )
+	        .map { prefix, file1, file2 -> tuple(getLibraryId(prefix), file1, file2) }
+	        .groupTuple()
+	        .set {reads}
+	TARGETED_FAMILY(
+		reads,
+		ref_fa,
+		ref_fai,
+		known_snps_dbsnp_index,
+		known_indels_index,
+		known_snps_dbsnp,
+		known_indels,
+		target_bed,
+		ch_versions
+	)
+	ch_versions = ch_versions.mix(TARGETED_FAMILY.out.versions)
 }
 
 workflow {
-	TARGETED_FAMILY(reads, ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed)
+	main: 
+	TARGETED_ANALYSIS()
 }
