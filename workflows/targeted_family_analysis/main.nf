@@ -2,7 +2,8 @@
 nextflow.enable.dsl=2
 
 include { BWA_ALIGN } from '../../subworkflow/align_bwa'
-INCLUDE { GATK_PRACTICES }  from '../../subworkflow/gatk_practices'
+include { GATK_PRACTICES }  from '../../subworkflow/gatk_practices'
+
 workflow TARGETED_FAMILY{
 	take: 
 		reads
