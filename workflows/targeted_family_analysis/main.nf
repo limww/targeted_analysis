@@ -22,5 +22,5 @@ workflow TARGETED_FAMILY{
 		//VARIANT_CALLING(ref_fa, ref_fai, known_snps_dbsnp_index, known_indels_index, known_snps_dbsnp, known_indels, target_bed, params.proband)
 	emit:
 		BWA_ALIGN.out.aligned_bam
-		BWA_ALIGN.out.ch_versions
+		versions = ch_versions
 }
