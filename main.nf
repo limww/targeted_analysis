@@ -13,8 +13,7 @@ timestamp = file(params.timestamp)
 pattern = file(params.pattern)
 join_number = file(params.join_number)
 
-include { MERGE_FASTQ } from './modules/merge_fastq'
-include { ALIGN_READS } from './modules/align'
+include { ALIGN } from './subworkflow/align_bwa'
 
 def getLibraryId( file ) {
     def filename = file.split(/\//)[-1]  // Extract filename from the full path
@@ -37,19 +36,7 @@ Channel
         .groupTuple()
         .set {reads}
 
-workflow ALIGN {
-	take:
-		reads
-		ref
-		ref_fai
-	main:
-		ch_versions = Channel.empty()
-		MERGE_FASTQ(reads)
-		ALIGN_READS(MERGE_FASTQ.out, ref_fa, ref_fai)
-	emit: 
-		aligned_bam = ALIGN_READS.out[0]
-		ch_versions = ch_versions.mix(ALIGN_READS.out.versions)
-}
+
 
 /*workflow PRE-PROCESSING {
 	MARK_DUPLICATES(ALIGN_READS.out[0])
