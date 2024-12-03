@@ -25,7 +25,7 @@ workflow PREPROCESSING {
      ch_versions = ch_versions.mix(APPLY_BQSR_WES.out.versions)
   emit:
     mark_dup_bam = MARK_DUPLICATES.out[0]
-    bqsr_recal_bam = BASE_RECALIBRATOR_WES.out[0]
-    apply_bqsr_bam = APPLY_BQSR_WES.out[0]
+    bqsr_recal_table = BASE_RECALIBRATOR_WES.out[0]
+    bqsr_bam = APPLY_BQSR_WES.out[0]
     versions = ch_versions
 }
